@@ -83,9 +83,45 @@ public class Lexer {
 		}
 		
 		//multiply by ten to get number etc
-		if(Character.isDigit(peek)){}
+		if(Character.isDigit(peek)){
+			int v = 0;
+			do {
+				v = 10*v + Character.digit(peek, 10);
+				read();	
+			} while ( Character.isDigit(peek) );
+			if( peek != '.' ) {
+				return new Num(v);
+			}
+			float x = v;
+			float d = 10;
+			for(;;){
+				read();
+				if(!Character.isDigit(peek)) {
+					break;
+				}
+				x = x + Character.digit(peek, 10) / d;
+				d = d*10;
+			}
+			return new Real(x);
+		}
 		
 		//add stringbuilder etc
-		if(Character.isLetter((int) peek)){}
+		if(Character.isLetter((int) peek)){
+			StringBuffer b = new StringBuffer();
+			do{
+				b.append(peek);
+				read();
+			} while( Character.isLetterOrDigit(peek));
+			
+			String s = b.toString();
+			if(!keywords.containsKey(s))	{
+				keywords.put(s, new Keyword(s, Tag.ID));
+			}
+			return keywords.get(s);
+		}
+
+		Token tok = new Token(peek);
+		peek = ' ';
+		return tok;
 	}
 }
