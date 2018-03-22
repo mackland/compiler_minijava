@@ -43,6 +43,28 @@ public class Lexer {
 			}		
 		}
 
+		//handling comments
+		if(peek == '/') {
+			//single
+			if(read('/') {
+				for(;;read()){
+					if(peek == '\n') {
+						break;
+					}
+				}
+			/*multi-line, requires 2 lookahead*/
+			} else if(read('*')) {
+				prevPeek = ' ';
+				for(;;prevPeek = peek, read()){
+					if(prevPeek == '*' && peek == '/'){
+						break;
+					}
+				}
+			} else {
+				throw new SyntaxError();
+			}
+		}
+
 		switch(peek) {
 			case '&':
 				if(read('&')) {
