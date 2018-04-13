@@ -46,7 +46,7 @@ public class Lexer {
         //handling comments
         if(peek == '/') {
             //single
-            if(read('/') {
+            if(read('/')) {
                 for(;;read()){
                     if(peek == '\n') {
                         break;
