@@ -1,6 +1,6 @@
 package lexer;
 
-import java.io.*; import java.util.*;
+import java.io.*; import java.util.*; import symbols.*;
 
 public class Lexer {
 
@@ -15,8 +15,8 @@ public class Lexer {
         reserve( new Keyword("while",   Tag.WHILE)  );
         reserve( new Keyword("do",      Tag.DO)     );
         reserve( new Keyword("break",   Tag.BREAK)  );
-        reserve( Keyword.True   );  reserve( Keyword.False  );
-        reserve( Keyword.Int    );  reserve( Type.Char      );
+        reserve( Keyword.TRUE   );  reserve( Keyword.FALSE  );
+        reserve( Type.Int       );  reserve( Type.Char      );
         reserve( Type.Bool      );  reserve( Type.Float     );
     }
 
@@ -24,11 +24,11 @@ public class Lexer {
         keywords.put(w.lexeme, w);
     }
 
-    private void read() {
+    private void read() throws IOException {
         peek = (char) System.in.read();
     }
 
-    private boolean read(char c) {
+    private boolean read(char c) throws IOException {
         read();
         if(peek != c) {
             return false;
@@ -38,7 +38,7 @@ public class Lexer {
         }
     }
 
-    public Token scan() {
+    public Token scan() throws IOException {
         for(;; read()) {
             if(peek == ' ' || peek == '\t') {
                 //continue; whitespace
@@ -67,7 +67,7 @@ public class Lexer {
                     }
                 }
             } else {
-                throw new SyntaxError();
+                // add error handling here throw syntax error
             }
         }
 

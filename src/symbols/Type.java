@@ -19,7 +19,7 @@ public class Type extends Keyword {
         if (p == Type.Char || p == Type.Int || p == Type.Float) {
             return true;
         } else {
-            return false
+            return false;
         }
     }
 
