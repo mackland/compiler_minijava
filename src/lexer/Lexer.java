@@ -1,12 +1,14 @@
 package lexer;
 
+import java.io.*; import java.util.*;
+
 public class Lexer {
 
-    private HashMap<String, Keyword> words = new HashMap<>();
+    private HashMap<String, Keyword> keywords = new HashMap<>();
     
     private char peek = ' ';
     private int currentLine = 1;
-    
+
     public Lexer() {
         reserve( new Keyword("if",      Tag.IF)     );
         reserve( new Keyword("else",    Tag.ELSE)   );
@@ -16,6 +18,10 @@ public class Lexer {
         reserve( Keyword.True   );  reserve( Keyword.False  );
         reserve( Keyword.Int    );  reserve( Type.Char      );
         reserve( Type.Bool      );  reserve( Type.Float     );
+    }
+
+    private void reserve(Keyword w){
+        keywords.put(w.lexeme, w);
     }
 
     private void read() {
@@ -54,7 +60,7 @@ public class Lexer {
                 }
             /*multi-line, requires 2 lookahead*/
             } else if(read('*')) {
-                prevPeek = ' ';
+                char prevPeek = ' ';
                 for(;;prevPeek = peek, read()){
                     if(prevPeek == '*' && peek == '/'){
                         break;
