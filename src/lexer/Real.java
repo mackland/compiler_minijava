@@ -9,7 +9,7 @@ public class Real extends Token {
     }
 
     public String toString() {
-        return "" + (char) value;
+        return "" +  value;
     }
 
 }
