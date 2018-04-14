@@ -9,7 +9,7 @@ public class Num extends Token {
     }
 
     public String toString(){
-        return "" + (char) value;
+        return "" + value;
     }
 
 }
