@@ -21,7 +21,7 @@ public class Parser {
         look = lex.scan();
     }
         
-    void error(String s) throws IOException{
+    void error(String s) {
         throw new error("near line "+lex.line+": "+s);
     }
 
@@ -44,7 +44,7 @@ public class Parser {
         s.emitlabel(after);
     }
     // match('{') makes sense but not 100 sure
-    Stmt block() throws IOException{
+    private Stmt block() throws IOException{
         match('{'); Env savedEnv = top; //store previous symbol table
         top = new Env(top);
 
@@ -55,7 +55,7 @@ public class Parser {
         return s;
     }
 
-    void decls() throws IOException {
+    private void decls() throws IOException {
         while( look.tag == Tag.BASIC ){
             Type t = type();
             Token tok = look;   match(Tag.ID);  match(';');
@@ -65,14 +65,14 @@ public class Parser {
         }
     }
 
-    Type type() throws IOException {
+    private Type type() throws IOException {
         Type t = (Type) look;   //expect look.tag == Tag.BASIC
         match(Tag.BASIC);
         if( look.tag != '[' ) return t; //basic type
         else return dims(t);            //array type
     }
     //uncertain of format here
-    Type dims(Type t) throws IOException {
+    private Type dims(Type t) throws IOException {
         match('['); Token tok = look; match(Tag.NUM); match(']');
         if( look.tag == '[' ) {
             t = dims(t);
@@ -80,7 +80,7 @@ public class Parser {
         return new Array(((Num)tok).value, t);
     }   
 
-    Stmt stmts() throws IOException {
+    private Stmt stmts() throws IOException {
         if( look.tag == '}' ) {
             return Stmt.Null;
         } else {
@@ -88,24 +88,47 @@ public class Parser {
         }
     }
 
-    Stmt stmt() throws IOException {
+    private Stmt stmt() throws IOException {
         Expr x; Stmt s, s1, s2;
         Stmt savedStmt;
     
         switch( look.tag ) {
             case ';':
-
+                move();
+                return Stmt.Null;
             case Tag.IF:
-
+                match(Tag.IF); match('('); x = bool(); match(')');
+                s1 = stmt();
+                if( look.tag != Tag.ELSE ) {
+                    return new If(x, s1);
+                }
+                match(Tag.ELSE);
+                s2 = stmt();
+                return new Else(x, s1, s2);
             case Tag.WHILE:
-
+                While whilenode = new While();
+                savedStmt = Stmt.Enclosing; Stmt.Enclosing = whilenode;
+                match(Tag.WHILE); match('('); x = bool(); match(')');
+                s1 = stmt();
+                whilenode.init(x, s1);
+                Stmt.Enclosing = savedStmt;
+                return whilenode;
             case Tag.DO:
-
+                Do donode = new Do();
+                savedStmt = Stmt.Enclosing; Stmt.Enclosing = donode;
+                match(Tag.DO);
+                s1 = stmt();
+                match(Tag.WHILE); match('('); x = bool(); match(')'); match(';');
+                donode.init(s1, x);
+                Stmt.Enclosing = savedStmt;
+                return donode;
             case Tag.BREAK:
-
+                match(Tag.BREAK); match(';');
+                return new Break();
             case '{':
-
+                return block();
             default:
+                return assign();
         }
     }
 }
