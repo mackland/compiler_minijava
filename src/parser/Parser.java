@@ -239,6 +239,9 @@ public class Parser {
                 move();
                 if( look.tag != '[' ) return id;
                 else return offset(id);
+            case default:
+                error("syntax error");
+                return x;
         }
     }
 }
