@@ -211,4 +211,34 @@ public class Parser {
             return factor();
         }
     }
+
+    private Expr factor() throws IOException {
+        Expr x = null;
+        switch( look.tag ) {
+            case '(':
+                move(); x = bool(); match(')');
+                return x;
+            case Tag.NUM:
+                x = new Constant(look, Type.Int); move();
+                return x;
+            case Tag.REAL:
+                x = new Constant(look, Type.Float); move();
+                return x;
+            case Tag.TRUE:
+                x = Constant.True; move();
+                return x;
+            case Tag.FALSE:
+                x = Constant.False; move();
+                return x;
+            case Tag.ID:
+                String s = look.toString();
+                Id id = top.get(look);
+                if( id == null ) {
+                    error(look.toString() + " undeclared");
+                }
+                move();
+                if( look.tag != '[' ) return id;
+                else return offset(id);
+        }
+    }
 }
