@@ -150,4 +150,39 @@ public class Parser {
         match(';');
         return stmt;
     }
+
+    private Expr bool() throws IOException {
+        Expr x = join();
+        while( look.tag == Tag.OR ) {
+            Token tok = look; move(); x = new Or(tok, x, join());
+        }
+        return x;
+    }
+
+    private Expr join() throws IOException {
+        Expr x = equality();
+        while( look.tag == Tag.AND ) {
+            Token tok = look; move(); x = new And(tok, x, equality());
+        }
+        return x;
+    }
+
+    private Expr equality() throws IOException {
+        Expr x = rel();
+        while( look.tag = Tag.EQ || look.tag == Tag.NE ) {
+            Token tok = look; move(); x = new Rel(tok, x, rel());
+        }
+        return x;
+    }
+
+    private Expr rel() throws IOException {
+        Expr x = expr();
+
+        switch( look.tag ) {
+            case '<': case Tag.LE: case Tag.GE: case '>':
+                Token tok = look; move(); return new Rel(tok, x, expr());
+            default:
+                return x;
+        }
+    }
 }
