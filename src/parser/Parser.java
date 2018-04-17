@@ -185,4 +185,30 @@ public class Parser {
                 return x;
         }
     }
+
+    private Expr expr() throws IOException {
+        Expr x = term();
+        while( look.tag == '+' || look.tag == '-' ) {
+            Token tok = look; move(); x = new Arith(tok, x, term());
+        }
+        return x;
+    }
+
+    private Expr term() throws IOException {
+        Expr x = unary();
+        while(look.tag == '*' || look.tag == '/' ){
+            Token tok = look; move(); x = new Arith(tok, x, unary());
+        }
+        return x;
+    }
+
+    private Expr unary() throws IOException {
+        if( look.tag == '-' ){
+            move(); return new Unary(Word, minus, unary());
+        } else if ( look.tag == '\' ){
+            Token tok = look; move(); return new Mot(tok, unary());
+        } else {
+            return factor();
+        }
+    }
 }
