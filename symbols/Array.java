@@ -12,8 +12,8 @@ public class Array extends Type {
         of = p;
     }
 
-    public toString(){
-        return "[" + size + "]" } of.toString();
+    public String toString(){
+        return "[" + size + "]" + of.toString();
     }
 
 }
