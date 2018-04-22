@@ -8,7 +8,7 @@ public class Temp extends Expr {
     int number = 0;
     
     public Temp(Type t) {
-        super(Keyword.temp, t);
+        super(Keyword.TEMP, t);
         number = ++count;
     }
 
