@@ -13,8 +13,8 @@ public class Constant extends Expr {
     }
 
     public static final Constant
-        True = new Constant(Keyword.True,   Type.Bool),
-        False = new Constant(Keyword.False, Type.Bool);
+        True = new Constant(Keyword.TRUE,   Type.Bool),
+        False = new Constant(Keyword.FALSE, Type.Bool);
 
     public void jumpting(int t, int f) {
         if( this == True && t != 0){

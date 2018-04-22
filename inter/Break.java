@@ -11,6 +11,6 @@ public class Break extends Stmt {
     }
 
     public void gen(int b, int a){
-        emit( "goto L" + stmt.after;
+        emit( "goto L" + stmt.after);
     }
 }

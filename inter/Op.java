@@ -10,8 +10,8 @@ public class Op extends Expr {
 
     public Expr reduce() {
         Expr x = gen();
-        temp tmp = new Temp(type);
-        emit( t.toString() + " = " + x.toString() );
+        Temp tmp = new Temp(type);
+        emit( tmp.toString() + " = " + x.toString() );
         return tmp;
     }
 }
