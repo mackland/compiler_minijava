@@ -2,7 +2,7 @@ package lexer;
 
 public class Token {
 
-    private int tag;
+    public int tag;
 
     public Token(int t) {
         this.tag = t;

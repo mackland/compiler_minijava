@@ -22,7 +22,7 @@ public class Parser {
     }
         
     void error(String s) {
-        throw new error("near line "+lex.line+": "+s);
+        throw new Error("near line " + lex.currentLine + ": " + s);
     }
 
     void match(int t) throws IOException {
@@ -61,7 +61,7 @@ public class Parser {
             Token tok = look;   match(Tag.ID);  match(';');
             Id id = new Id((Keyword) tok, t, used);
             top.put(tok, id); //add to symbol table
-            used = used + p.width;
+            used = used + t.width;
         }
     }
 
@@ -139,7 +139,7 @@ public class Parser {
         if( id == null) {
             error(t.toString() + " undeclared");
         }
-        if( look.tag == '>=' ) {
+        if( look.tag == Tag.GE ) {
             move();
             stmt = new Set(id, bool());
         } else {
@@ -169,7 +169,7 @@ public class Parser {
 
     private Expr equality() throws IOException {
         Expr x = rel();
-        while( look.tag = Tag.EQ || look.tag == Tag.NE ) {
+        while( look.tag == Tag.EQ || look.tag == Tag.NE ) {
             Token tok = look; move(); x = new Rel(tok, x, rel());
         }
         return x;
@@ -204,9 +204,9 @@ public class Parser {
 
     private Expr unary() throws IOException {
         if( look.tag == '-' ){
-            move(); return new Unary(Word, minus, unary());
-        } else if ( look.tag == '\' ){
-            Token tok = look; move(); return new Mot(tok, unary());
+            move(); return new Unary(Keyword.MINUS, unary());
+        } else if ( look.tag == Tag.NE ){ //IS THIS CORRECT?
+            Token tok = look; move(); return new Not(tok, unary());
         } else {
             return factor();
         }
@@ -239,7 +239,7 @@ public class Parser {
                 move();
                 if( look.tag != '[' ) return id;
                 else return offset(id);
-            case default:
+            default:
                 error("syntax error");
                 return x;
         }
