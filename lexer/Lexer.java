@@ -7,7 +7,7 @@ public class Lexer {
     private HashMap<String, Keyword> keywords = new HashMap<>();
     
     private char peek = ' ';
-    private int currentLine = 1;
+    public static int currentLine = 1;
 
     public Lexer() {
         reserve( new Keyword("if",      Tag.IF)     );
