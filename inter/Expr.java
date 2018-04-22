@@ -20,7 +20,7 @@ public class Expr extends Node {
         return this;
     }
 
-    public void jumping(int i, int f) {
+    public void jumping(int t, int f) {
         emitjumps(toString(), t, f);
     }
 

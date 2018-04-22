@@ -6,7 +6,7 @@ public class Node {
     int lexline = 0;
 
     Node() {
-        lexline = Lexer.line;
+        lexline = Lexer.currentLine;
     }
     
     void error(String s) {

@@ -6,7 +6,7 @@ import symbols.*;
 public class Id extends Expr {
     public int offset;
     public Id(Keyword id, Type t, int b){
-        super(id, p);
+        super(id, t);
         offset = b;
     }
 }
