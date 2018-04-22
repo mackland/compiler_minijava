@@ -13,10 +13,10 @@ Want to keep the lexer and parser handwritten. First complete the front-end then
 |--------------|---|--------------------------------------------------------------|
 | program      | = | block                                                        |
 | block        | = | {decls stmts}                                                |
-| decls        | = | decls decl __e__                                         |
+| decls        | = | decls \| decl \| __e__                                         |
 | decl         | = | type __id__ __;__                                            |
-| type         | = | type __[__ __num__ __]__ __basic__                     |
-| stmt         | = | stmts stmt __e__                                         |
+| type         | = | type __[__ __num__ __]__ \| __basic__                     |
+| stmt         | = | stmts \| stmt __e__                                         |
 
 
 Reference:
