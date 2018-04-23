@@ -26,6 +26,8 @@ public class Parser {
     }
 
     void match(int t) throws IOException {
+        System.out.println("expect: " + t);
+        System.out.println("look tag: " + look.tag);
         if(look.tag == t) {
             move(); 
         } else {
@@ -139,7 +141,9 @@ public class Parser {
         if( id == null) {
             error(t.toString() + " undeclared");
         }
-        if( look.tag == Tag.GE ) {
+        System.out.println("Next: " + look.tag);
+        if( look.tag == '=' ) {
+            System.out.println("Do we get here?");
             move();
             stmt = new Set(id, bool());
         } else {
