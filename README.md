@@ -49,9 +49,9 @@ L8 :      t5 = i * 8
 L10 :     t6 = i * 8
           t7 = j * 8
           t8 = a [ t7 ]
-          a [ t6 ] t8
+          a [ t6 ] = t8
 L11 :     t9 = j * 8
-          a [ t9 ] x
+          a [ t9 ] = x
           goto L1
 L2 :
 ```
