@@ -5,7 +5,7 @@ I have finally decided to create my own compiler. This is something I have wante
 
 I will be following the advice and steps given in __Compilers: Principles, Techniques, and Tools__ by _Aho et. al_ for a subset of Java. I have looked at other sources like __Modern Compiler Implementation in Java__ by _Appel_ but feel the former gives a more thorough explanation of all relevant concepts.
 
-Want to keep the lexer and parser handwritten. First complete the front-end then move on to back-end when I have time over during the summer.
+Want to keep the lexer and parser handwritten. First complete the front-end then move on to back-end, currently the intermediate representation is three-address code but I want to change this to bytecode for the JVM.
 
 ## Source language
 
