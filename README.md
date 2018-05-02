@@ -16,7 +16,11 @@ Want to keep the lexer and parser handwritten. First complete the front-end then
 | decls        | = | decls \| decl \| __e__                                         |
 | decl         | = | type __id__ __;__                                            |
 | type         | = | type __[__ __num__ __]__ \| __basic__                     |
-| stmt         | = | stmts \| stmt __e__                                         |
+| stmt         | = | stmts \| stmt \| __e__                                         |
+
+__e__ represents the empty token.
+
+__basic types__ consist of int, float, int[], char, and boolean.
 
 ## Example Program  
 ```
