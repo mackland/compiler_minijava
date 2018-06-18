@@ -1,5 +1,6 @@
 ## compiler_minijava
 
+June update: finally done with my thesis, going to start working on the backend of the compiler using Apache Commons BCEL.
 
 I have finally decided to create my own compiler. This is something I have wanted to do since I first learned how to code, and would question what had originally been coded to create the program I was typing my code into.
 
